@@ -6,10 +6,12 @@ const Header = () => {
     <Wrapper>
       <h1>TextBoard</h1>
       <Right>
-        <SearchBar>
-          <input type="text" placeholder="게시글 검색.." />
-          <img src="/imgs/Search.svg" />
-        </SearchBar>
+        <label htmlFor="Search">
+          <SearchBar>
+            <input id="Search" type="text" placeholder="게시글 검색.." />
+            <img src="/imgs/Search.svg" />
+          </SearchBar>
+        </label>
         <Login>
           <h1>로그인</h1>
         </Login>
@@ -45,7 +47,7 @@ const SearchBar = styled.div`
   background-color: #efefef;
   font-family: inter;
   font-weight: 600;
-  cursor: pointer;
+  cursor: text;
   input {
     width: 250px;
     font-size: 20px;
@@ -53,11 +55,12 @@ const SearchBar = styled.div`
     font-weight: 600;
     border: none;
     background: none;
-    cursor: pointer;
+    cursor: text;
     &:focus {
       outline: none;
     }
     &::placeholder {
+      color: #B6B6B6;
       font-family: inter;
       font-weight: 600;
       font-size: 15px;
