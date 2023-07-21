@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 const Header = () => {
   return (
     <Wrapper>
-      <h1>TextBoard</h1>
+      <Title to="/"><h1>TextBoard</h1></Title>
       <Right>
         <label htmlFor="Search">
           <SearchBar>
             <input id="Search" type="text" placeholder="게시글 검색.." />
-            <img src="/imgs/Search.svg" />
+            <img src="/imgs/Search.svg" alt="" />
           </SearchBar>
         </label>
         <Login>
@@ -60,7 +60,7 @@ const SearchBar = styled.div`
       outline: none;
     }
     &::placeholder {
-      color: #B6B6B6;
+      color: #b6b6b6;
       font-family: inter;
       font-weight: 600;
       font-size: 15px;
@@ -98,4 +98,9 @@ const Login = styled(Link)`
     font-size: 25px;
     text-decoration: none;
   }
+`;
+
+const Title = styled(Link)`
+  text-decoration: none;
+  color: black;
 `;

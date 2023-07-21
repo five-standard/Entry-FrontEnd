@@ -28,6 +28,9 @@ const Wrapper = styled.div`
   & > h1 {
     font-size: 25px;
   }
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Left = styled.div`
