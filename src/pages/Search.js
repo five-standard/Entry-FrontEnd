@@ -32,7 +32,6 @@ const Posts = styled.div`
 const Result = styled.h1`
   font-size: 30px;
   color: gray;
-  margin: 0;
   & > span {
     color: black;
   }

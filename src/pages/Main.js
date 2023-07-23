@@ -69,7 +69,6 @@ const Write = styled(Link)`
   color: white;
   transition: 0.2s;
   & > h1 {
-    margin: 0px;
     font-size: 25px;
   }
   &:hover {
