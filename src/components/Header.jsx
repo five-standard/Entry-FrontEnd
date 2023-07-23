@@ -2,22 +2,20 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
-  return (
-    <Wrapper>
-      <Title to="/"><h1>TextBoard</h1></Title>
-      <Right>
-        <label htmlFor="Search">
-          <SearchBar>
-            <input id="Search" type="text" placeholder="게시글 검색.." />
-            <img src="/imgs/Search.svg" alt="" />
-          </SearchBar>
-        </label>
-        <Login>
-          <h1>로그인</h1>
-        </Login>
-      </Right>
-    </Wrapper>
-  );
+  return <Wrapper>
+    <Title to="/"><h1>TextBoard</h1></Title>
+    <Right>
+      <label htmlFor="Search">
+        <SearchBar>
+          <input id="Search" type="text" placeholder="게시글 검색.." />
+          <img src="/imgs/Search.svg" alt="" />
+        </SearchBar>
+      </label>
+      <Login>
+        <h1>로그인</h1>
+      </Login>
+    </Right>
+  </Wrapper>
 };
 
 export default Header;

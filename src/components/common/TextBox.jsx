@@ -1,15 +1,13 @@
 import styled from 'styled-components';
 
 const TextBox = ({ Title, Date, Author }) => {
-  return (
-    <Wrapper>
+  return <Wrapper>
       <Left>
-        <h1>{Title}</h1>
-        <h1>{Date}</h1>
-      </Left>
-      <h1>{Author}</h1>
-    </Wrapper>
-  );
+      <h1>{Title}</h1>
+      <h1>{Date}</h1>
+    </Left>
+    <h1>{Author}</h1>
+  </Wrapper>
 };
 
 export default TextBox;
