@@ -1,0 +1,67 @@
+{
+  "posts": [
+    {
+      "title": "Hello World!",
+      "author": "six-standard",
+      "date": "2023-07-24",
+      "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Enim facilisis gravida neque convallis a cras semper auctor. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Et magnis dis parturient montes.",
+      "likes": 132,
+      "comments" : [
+        {
+          "author": "six-standard",
+          "date": "2023-07-24",
+          "data": "lorem god",
+          "id": 1
+        },
+        {
+          "author": "six-standard",
+          "date": "2023-07-24",
+          "data": "sibal jadongcha",
+          "id": 2
+        }
+      ],
+      "id": 1
+    },
+    {
+      "title": "Hi World!",
+      "author": "seven-standard",
+      "date": "2023-07-23",
+      "data": "Loremm Ipsumm Dolarr",
+      "likes": 132,
+      "id": 2
+    },
+    {
+      "title": "Bonjour World!",
+      "author": "eight-standard",
+      "date": "2023-07-22",
+      "data": "LLorem IIpsum DDolar",
+      "likes": 132,
+      "id": 3
+    },
+    {
+      "title": "E World!",
+      "author": "nine-standard",
+      "date": "2023-07-21",
+      "data": "Loorem Ippsum Doolar",
+      "likes": 132,
+      "id": 4
+    }, 
+    {
+      "title": "A World!",
+      "author": "ten-standard",
+      "date": "2023-07-20",
+      "data": "Lorrem Ipssum Dollar",
+      "likes": 132,
+      "id": 5
+    },
+    {
+      "title": "B World!",
+      "author": "one-standard",
+      "date": "2023-07-19",
+      "data": "",
+      "likes": 132,
+      "id": 6
+    }
+  ],
+  "users": []
+}
