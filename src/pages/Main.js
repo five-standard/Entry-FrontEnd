@@ -2,23 +2,49 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import TextBox from '../components/common/TextBox';
+import { useState, useEffect } from 'react';
+import { getPosts } from '../apis/get/getPosts';
 
 const Main = () => {
+  const [response, setResponse] = useState([]);
+  const [resLeng, setResLeng] = useState(1);
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    getPosts(count)
+      .then(res => {
+        setResponse(res.data);
+      })
+  }, [count]);
+
+  const editcount = () => {
+
+  }
+
+  const previous = () => {
+    if(count>0) setCount(count-1);
+  }
+
+  const next = () => {
+    if(count<resLeng) setCount(count+1);
+  }
+
   return <Wrapper>
     <Posts>
       <Write>
         <h1>글 작성하기</h1>
       </Write>
-      <TextBox Title="안녕하세요" Date="2023-07-20" Author="Six-standard" />
-      <TextBox Title="안녕하세요" Date="2023-07-20" Author="Six-standard" />
-      <TextBox Title="안녕하세요" Date="2023-07-20" Author="Six-standard" />
-      <TextBox Title="안녕하세요" Date="2023-07-20" Author="Six-standard" />
-      <TextBox Title="안녕하세요" Date="2023-07-20" Author="Six-standard" />
+      {
+        response?.map(data => {
+          return (
+            <TextBox Title={data.title} Date={data.date} Author={data.author} Id={data.id} key={data.id} />
+          )
+        })
+      }
     </Posts>
     <Pagination>
-      <button>〈</button>
-      <button>1</button>
-      <button>〉</button>
+      <button onClick={previous}>〈</button>
+      <button onClick={next}>〉</button>
     </Pagination>
   </Wrapper>
 };
@@ -52,7 +78,9 @@ const Pagination = styled.div`
 
 const Posts = styled.div`
   display: flex;
+  width: 65%;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
 `;
 

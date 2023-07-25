@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
-const TextBox = ({ Title, Date, Author }) => {
-  return <Wrapper>
+const TextBox = ({ Title, Date, Author, Id }) => {
+  const goPost = Id => {
+     window.location.href = `http://localhost:3000/posts/${Id}`;
+  }
+
+  return <Wrapper onClick={() => goPost(Id)}>
       <Left>
       <h1>{Title}</h1>
       <h1>{Date}</h1>
@@ -19,7 +23,7 @@ const Wrapper = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   box-sizing: border-box;
-  width: 1100px;
+  width: 100%;
   height: 110px;
   background: #EFEAEA;
   border-radius: 15px;
