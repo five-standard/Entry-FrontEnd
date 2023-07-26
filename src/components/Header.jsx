@@ -1,19 +1,35 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+
+  const [cookies, setCookie, removeCookie] = useCookies()
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  const handleEnter = (e) => {
+    if(e.key === "Enter") {
+      navigate("/search");
+    }
+  }
+
   return <Wrapper>
     <Title to="/"><h1>TextBoard</h1></Title>
     <Right>
       <label htmlFor="Search">
         <SearchBar>
-          <input id="Search" type="text" placeholder="게시글 검색.." />
-          <img src="/imgs/Search.svg" alt="" />
+          <input id="Search" type="text" placeholder="게시글 검색.."  onChange={(e) => setSearch(e.target.value)} onKeyDown={handleEnter}/>
+          <img src="/imgs/Search.svg" alt="icon" />
         </SearchBar>
       </label>
-      <Login>
-        <h1>로그인</h1>
-      </Login>
+      {
+        !cookies.accessToken
+        ? <Login to="/login"> <h1>로그인</h1> </Login> //로그인하지 않았을 시 로그인 버튼 표시
+        : <img src="/imgs/Profile.svg" /> //로그인했을 시 아이콘 표시
+      }
     </Right>
   </Wrapper>
 };
@@ -21,69 +37,79 @@ const Header = () => {
 export default Header;
 
 const Wrapper = styled.div`
+  //Flex
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding-left: 30px;
-  padding-right: 30px;
+  justify-content: space-between;
+  //도형 크기
   width: 100%;
   height: 70px;
+  //기타 형태
+  padding-left: 30px;
+  padding-right: 30px;
   box-sizing: border-box;
   box-shadow: 0px 4px 6px gray;
-  font-family: inter;
+
 `;
 
 const SearchBar = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  //Flex
   gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //도형 크기
   width: 340px;
   height: 45px;
-  box-sizing: border-box;
-  border-radius: 10px;
-  background-color: #efefef;
-  font-family: inter;
-  font-weight: 600;
+  //기타 형태
   cursor: text;
-  input {
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #efefef;
+  //폰트
+  font-weight: 600;
+  & * { cursor: text; outline: none; }
+  &> input {
     width: 250px;
-    font-size: 20px;
-    font-family: inter;
-    font-weight: 600;
     border: none;
     background: none;
-    cursor: text;
-    &:focus {
-      outline: none;
-    }
+    font-size: 20px;
+    font-weight: 600;
     &::placeholder {
-      color: #b6b6b6;
-      font-family: inter;
-      font-weight: 600;
       font-size: 15px;
+      font-weight: 600;
+      color: #b6b6b6;
     }
   }
-`;
+`
 
 const Right = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 30px;
-`;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & > img {
+    width: 55px;
+    height: 55px;
+    &:hover { cursor: pointer; }
+  }
+`
 
 const Login = styled(Link)`
   display: flex;
   justify-content: center;
+
   width: 115px;
   height: 55px;
   padding: 10px;
+
   box-sizing: border-box;
   border-radius: 15px;
   background: #8b8b8b;
-  text-decoration: none;
   transition: 0.2s;
+
+  text-decoration: none;
+
   &:hover {
     transition: 0.2s;
     background-color: #515151;
@@ -91,14 +117,13 @@ const Login = styled(Link)`
   & > h1 {
     margin: 0;
     color: white;
-    font-family: inter;
-    font-weight: 600;
     font-size: 25px;
+    font-weight: 600;
     text-decoration: none;
   }
-`;
+`
 
 const Title = styled(Link)`
-  text-decoration: none;
   color: black;
-`;
+  text-decoration: none;
+`
