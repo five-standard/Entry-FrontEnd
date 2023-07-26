@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 const Header = () => {
 
   const [cookies, setCookie, removeCookie] = useCookies()
+  
+  //해당 부분 Recoil로 대체 예정
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const handleEnter = (e) => {
-    if(e.key === "Enter") {
-      navigate("/search");
-    }
+    if(e.key === "Enter") navigate("/search");
   }
 
   return <Wrapper>
@@ -21,14 +21,14 @@ const Header = () => {
     <Right>
       <label htmlFor="Search">
         <SearchBar>
-          <input id="Search" type="text" placeholder="게시글 검색.."  onChange={(e) => setSearch(e.target.value)} onKeyDown={handleEnter}/>
+          <input id="Search" type="text" placeholder="게시글 검색.." onChange={(e) => setSearch(e.target.value)} onKeyDown={handleEnter}/>
           <img src="/imgs/Search.svg" alt="icon" />
         </SearchBar>
       </label>
       {
         !cookies.accessToken
         ? <Login to="/login"> <h1>로그인</h1> </Login> //로그인하지 않았을 시 로그인 버튼 표시
-        : <img src="/imgs/Profile.svg" /> //로그인했을 시 아이콘 표시
+        : <img src="/imgs/Profile.svg" alt=""/> //로그인했을 시 아이콘 표시
       }
     </Right>
   </Wrapper>
