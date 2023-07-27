@@ -1,13 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
-import TextBox from '../components/common/TextBox';
+import { TextBox } from '../components/common/TextBox';
 import { useState, useEffect } from 'react';
 import { getPosts } from '../apis/get/getPosts';
+import { useCookies } from 'react-cookie';
 
-const Main = () => {
+export const Main = () => {
+  const [cookies, setCookie, removeCookie] = useCookies()
   const [response, setResponse] = useState([]);
-  const [resLeng, setResLeng] = useState(1);
+  const [resLeng, setResLeng] = useState(0);
   const [count, setCount] = useState(0);
   
   useEffect(() => {
@@ -31,13 +33,17 @@ const Main = () => {
 
   return <Wrapper>
     <Posts>
-      <Write>
-        <h1>글 작성하기</h1>
-      </Write>
+        {
+          cookies.accessToken
+          ?<Write to="/write">
+            <h1>글 작성하기</h1>
+          </Write>
+          :<Margin />
+        }
       {
         response?.map(data => {
           return (
-            <TextBox Title={data.title} Date={data.date} Author={data.author} Id={data.id} key={data.id} />
+            <TextBox Title={data.title} Date={data.date} Author={data.author} Likes={data.likes} Id={data.id} key={data.id} />
           )
         })
       }
@@ -49,19 +55,17 @@ const Main = () => {
   </Wrapper>
 };
 
-export default Main;
-
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   margin-top: 50px;
-`;
+`
 
 const Pagination = styled.div`
+  gap: 10px;
   display: flex;
   justify-content: center;
-  gap: 10px;
   margin-top: 30px;
   & > button {
     width: 40px;
@@ -70,37 +74,35 @@ const Pagination = styled.div`
     border-radius: 10px;
     font-size: 20px;
     font-weight: bolder;
-    &:hover {
-      border: 1px solid black;
-    }
+    &:hover { border: 1px solid black; }
   }
-`;
+`
 
 const Posts = styled.div`
-  display: flex;
-  width: 65%;
-  flex-direction: column;
-  align-items: center;
   gap: 20px;
-`;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 60%;
+`
+
+const Margin = styled.div` height: 53px; `
 
 const Write = styled(Link)`
   display: flex;
-  justify-content: center;
   align-self: flex-end;
-  box-sizing: border-box;
-  background: gray;
+  justify-content: center;
   width: 220px;
   padding: 10px;
-  border-radius: 15px;
-  text-decoration: none;
-  color: white;
+  background: gray;
   transition: 0.2s;
-  & > h1 {
-    font-size: 25px;
-  }
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: white;
+  text-decoration: none;
+  & > h1 { font-size: 25px; }
   &:hover {
     transition: 0.2s;
     background: #515151;
   }
-`;
+`
