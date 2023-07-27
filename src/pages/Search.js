@@ -1,38 +1,49 @@
-import React from 'react';
-import styled from 'styled-components';
-import TextBox from '../components/common/TextBox';
-/*import { Link } from 'react-router-dom';*/
+import { TextBox } from '../components/common/TextBox';
+import { searchPosts } from '../apis/get/searchPosts';
+import { useParams } from 'react-router-dom';
+import { styled } from 'styled-components';
+import React, { useEffect, useState } from 'react';
 
-const Search = () => {
+export const Search = () => {
+  const { search } = useParams();
+  const [response, setResponse] = useState([]);
+
+  useEffect(() => {
+    searchPosts(search)
+    .then(res => { setResponse(res.data); })
+  }, [search])
+
   return <Wrapper>
-    <Result>검색 결과 <span>2건</span>이 존재합니다.</Result>
+    <Result>검색 결과 <span>{response.length}건</span>이 존재합니다.</Result>
     <Posts>
-      <TextBox Title="안녕하세요" Date="2023-07-20" Author="Six-standard" />
-      <TextBox Title="안녕하세요" Date="2023-07-20" Author="Six-standard" />
+      {
+        response?.map(({title, date, likes, id, author}, index) => { 
+          return ( <TextBox Title={title} Date={date} Likes={likes} Id={id} Author={author} key={index}/> )
+        })
+      }
     </Posts>
   </Wrapper>
 };
 
-export default Search;
-
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   margin-top: 60px;
 `;
 
 const Posts = styled.div`
+  gap: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  box-sizing: border-box;
+  width: 60%;
+  padding: 20px;
   margin-top: 30px;
 `;
 
 const Result = styled.h1`
-  font-size: 30px;
   color: gray;
-  & > span {
-    color: black;
-  }
+  font-size: 30px;
+  & > span { color: black; }
 `;

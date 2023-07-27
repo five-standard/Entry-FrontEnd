@@ -1,22 +1,18 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { styled } from 'styled-components';
 import { useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-const Header = () => {
-
-  const [cookies, setCookie, removeCookie] = useCookies()
-  
+export const Header = () => {
+  const [cookies, setCookie] = useCookies();
   const [search, setSearch] = useState("");
 
   const handleEnter = (e) => {
-    if(e.key === "Enter") {
-      window.location.href = `/search/${search}`;
-    }
-  }
+    if(e.key === "Enter") window.location.href = `/search/${search}`;
+  };
 
   return <Wrapper>
-    <Title to="/"><h1>TextBoard</h1></Title>
+    <a href="/"><h1>TextBoard</h1></a>
     <Right>
       <label htmlFor="Search">
         <SearchBar>
@@ -27,48 +23,38 @@ const Header = () => {
       {
         !cookies.accessToken
         ? <Login to="/login"> <h1>로그인</h1> </Login> //로그인하지 않았을 시 로그인 버튼 표시
-        : <img src="/imgs/Profile.svg" alt=""/> //로그인했을 시 아이콘 표시
+        : <img src="/imgs/Profile.svg" alt="Profile"/> //로그인했을 시 아이콘 표시 (버튼 기능은 곧 구현 예정)
       }
     </Right>
   </Wrapper>
-};
-
-export default Header;
+}
 
 const Wrapper = styled.div`
-  //Flex
   display: flex;
   align-items: center;
   justify-content: space-between;
-  //도형 크기
   width: 100%;
   height: 70px;
-  //기타 형태
   padding-left: 30px;
   padding-right: 30px;
   box-sizing: border-box;
   box-shadow: 0px 4px 6px gray;
-
-`;
+`
 
 const SearchBar = styled.div`
-  //Flex
   gap: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  //도형 크기
   width: 340px;
   height: 45px;
-  //기타 형태
   cursor: text;
   border-radius: 10px;
   box-sizing: border-box;
   background-color: #efefef;
-  //폰트
   font-weight: 600;
   & * { cursor: text; outline: none; }
-  &> input {
+  & > input {
     width: 250px;
     border: none;
     background: none;
@@ -97,32 +83,20 @@ const Right = styled.div`
 const Login = styled(Link)`
   display: flex;
   justify-content: center;
-
   width: 115px;
   height: 55px;
   padding: 10px;
-
   box-sizing: border-box;
   border-radius: 15px;
   background: #8b8b8b;
   transition: 0.2s;
-
-  text-decoration: none;
-
   &:hover {
     transition: 0.2s;
     background-color: #515151;
   }
   & > h1 {
-    margin: 0;
-    color: white;
+    color: #ffffff;
     font-size: 25px;
     font-weight: 600;
-    text-decoration: none;
   }
-`
-
-const Title = styled(Link)`
-  color: black;
-  text-decoration: none;
 `
