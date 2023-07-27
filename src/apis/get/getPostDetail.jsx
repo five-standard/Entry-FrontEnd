@@ -3,8 +3,7 @@ import { baseURL } from "../baseUrl";
 
 export const getPostDtail = async (id) => {
   try {
-    const res = await axios.get(`${baseURL}/posts/${id}`);
-    return res;
+    return await axios.get(`${baseURL}/posts/${id}`);
   } catch(err) {
     console.log(err);
   }

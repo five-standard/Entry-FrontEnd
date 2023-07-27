@@ -1,9 +1,9 @@
 import axios from "axios";
 import { baseURL } from "../baseUrl";
 
-export const getPosts = async (count) => {
+export const searchPosts = async (search) => {
   try {
-    return await axios.get(`${baseURL}/posts?_start=${count*5}&_limit=5`);
+    return await axios.get(`${baseURL}/posts?q=${search}`);
   } catch(err) {
     console.log(err);
   }
