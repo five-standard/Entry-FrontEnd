@@ -6,7 +6,7 @@
       "date": "2023-07-24",
       "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Enim facilisis gravida neque convallis a cras semper auctor. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Et magnis dis parturient montes.",
       "likes": 132,
-      "comments" : [
+      "comments": [
         {
           "author": "six-standard",
           "date": "2023-07-24",
@@ -23,45 +23,75 @@
       "id": 1
     },
     {
-      "title": "Hi World!",
-      "author": "seven-standard",
-      "date": "2023-07-23",
-      "data": "Loremm Ipsumm Dolarr",
+      "title": "Hello World!2",
+      "author": "six-standard",
+      "date": "2023-07-24",
+      "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Enim facilisis gravida neque convallis a cras semper auctor. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Et magnis dis parturient montes.",
       "likes": 132,
+      "comments": [],
       "id": 2
     },
     {
-      "title": "Bonjour World!",
-      "author": "eight-standard",
-      "date": "2023-07-22",
-      "data": "LLorem IIpsum DDolar",
+      "title": "Hello World!3",
+      "author": "six-standard",
+      "date": "2023-07-24",
+      "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Enim facilisis gravida neque convallis a cras semper auctor. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Et magnis dis parturient montes.",
       "likes": 132,
+      "comments": [],
       "id": 3
     },
     {
-      "title": "E World!",
-      "author": "nine-standard",
-      "date": "2023-07-21",
-      "data": "Loorem Ippsum Doolar",
+      "title": "Hello World!4",
+      "author": "six-standard",
+      "date": "2023-07-24",
+      "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Enim facilisis gravida neque convallis a cras semper auctor. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Et magnis dis parturient montes.",
       "likes": 132,
+      "comments": [],
       "id": 4
-    }, 
+    },
     {
-      "title": "A World!",
-      "author": "ten-standard",
-      "date": "2023-07-20",
-      "data": "Lorrem Ipssum Dollar",
+      "title": "Hello World!5",
+      "author": "six-standard",
+      "date": "2023-07-24",
+      "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Enim facilisis gravida neque convallis a cras semper auctor. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Et magnis dis parturient montes.",
       "likes": 132,
+      "comments": [],
       "id": 5
     },
     {
-      "title": "B World!",
-      "author": "one-standard",
-      "date": "2023-07-19",
-      "data": "",
+      "title": "Hello World!6",
+      "author": "six-standard",
+      "date": "2023-07-24",
+      "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Enim facilisis gravida neque convallis a cras semper auctor. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Et magnis dis parturient montes.",
       "likes": 132,
+      "comments": [],
       "id": 6
+    },
+    {
+      "title": "Hello World!7",
+      "author": "six-standard",
+      "date": "2023-07-24",
+      "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Enim facilisis gravida neque convallis a cras semper auctor. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Et magnis dis parturient montes.",
+      "likes": 132,
+      "comments": [],
+      "id": 7
+    },
+    {
+      "title": "Hello World!8",
+      "author": "six-standard",
+      "date": "2023-07-24",
+      "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cum sociis natoque penatibus et magnis dis parturient montes nascetur. Enim facilisis gravida neque convallis a cras semper auctor. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Et magnis dis parturient montes.",
+      "likes": 132,
+      "comments": [],
+      "id": 8
     }
   ],
-  "users": []
+  "users": [
+    {
+      "email": "tester@gmail.com",
+      "password": "$2a$10$y7QSOmoUP3vyk3rhrbBmd.n25rsIDQePm7AFHqCs.g44dPV/GurK.",
+      "name": "test",
+      "id": 1
+    }
+  ]
 }
