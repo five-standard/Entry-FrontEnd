@@ -2,18 +2,17 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
   const [cookies, setCookie, removeCookie] = useCookies()
   
-  //해당 부분 Recoil로 대체 예정
   const [search, setSearch] = useState("");
-  const navigate = useNavigate();
 
   const handleEnter = (e) => {
-    if(e.key === "Enter") navigate("/search");
+    if(e.key === "Enter") {
+      window.location.href = `/search/${search}`;
+    }
   }
 
   return <Wrapper>
