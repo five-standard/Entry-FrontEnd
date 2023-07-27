@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { getPostDtail } from '../apis/get/getPostDetail';
 
-const Posts = () => {  
+export const Posts = () => {  
   const { id } = useParams();
   const [response, setResponse] = useState({});
 
@@ -12,64 +12,66 @@ const Posts = () => {
       .then(res => {
         setResponse(res.data);
       })
-  }, [])
+  }, [id]) 
 
   return <Wrapper>
     <Post>
-      <Info>
-        <Title>{response.title}</Title>
-        <UserInfo>
-          <h1>{response.author}</h1>
-          <Line />
-          <h1>{response.date}</h1>
-        </UserInfo>
-      </Info>
+      <Top> 
+        <div>
+          <Title>{response.title}</Title>
+          <h2>{response.author} | {response.date}</h2>
+        </div>
+        <Right>
+          <h1>{response.likes}</h1>
+          <img src="/imgs/Like.svg" alt="Likes"/>
+          <img src="/imgs/Menu.svg"alt="Menu"/>
+        </Right>
+      </Top>
       <hr />
       <Data>{response.data}</Data>
     </Post>
     <Comment>
-      <textarea></textarea>
-      <button></button>
+      <h1>총 <span>1개</span>의 댓글이 있습니다</h1>
+      <div>
+        <textarea />
+        <button></button>
+      </div>
+      <ul>
+        <li>six-standard - 안녕하세요</li>
+      </ul>
     </Comment>
   </Wrapper>
 };
 
-export default Posts;
-
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-top: 60px;
-  height: 793px;
+  flex-direction: column;
   justify-content: space-between;
-`;
+  height: 793px;
+  margin-top: 60px;
+`
 
 const Post = styled.div`
+  gap: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   width: 70%;
 `;
 
-const Info = styled.div`
-`;
-
-const UserInfo = styled.div`
+const Top = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  & > h1 {
-    font-size: 25px;
-  }
+  h2 { font-size: 25px; }
 `;
 
-const Line = styled.div`
-  width: 2px;
-  height: 30px;
-  background-color: black;
+const Right = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
 `;
-
 const Data = styled.h1`
   font-size: 20px;
 `;
@@ -79,17 +81,28 @@ const Title = styled.h1`
 
 const Comment = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 70%;
   gap: 10px;
-  height: 100px;
+  height: 150px;
   margin-bottom: 20px;
-  & > textarea {
+  & > div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 90%;
+    height: 100%;
+    & > textarea {
     border: 2px solid black;
-    width: 86%;
+    width: 90%;
+    height: 100%;
     border-radius: 10px;
     resize: none;
-  }
-  & > button {
+    }
+    & > button {
     width: 100px;
+    height: 100%;
+    }
   }
 `;
