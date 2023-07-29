@@ -1,7 +1,7 @@
+import { getPostDtail } from '../apis/get/getPostDetail';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { getPostDtail } from '../apis/get/getPostDetail';
 
 export const Posts = () => {  
   const { id } = useParams();
@@ -57,27 +57,21 @@ const Post = styled.div`
   display: flex;
   flex-direction: column;
   width: 70%;
-`;
+`
 
 const Top = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   h2 { font-size: 25px; }
-`;
+`
 
 const Right = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
   gap: 20px;
-`;
-const Data = styled.h1`
-  font-size: 20px;
-`;
-const Title = styled.h1`
-  font-size: 40px;
-`;
+`
 
 const Comment = styled.div`
   display: flex;
@@ -105,4 +99,8 @@ const Comment = styled.div`
     height: 100%;
     }
   }
-`;
+`
+
+const Title = styled.h1` font-size: 40px; `
+
+const Data = styled.h1` font-size: 20px; `

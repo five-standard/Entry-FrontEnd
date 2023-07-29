@@ -1,8 +1,8 @@
 import { TextBox } from '../components/common/TextBox';
 import { searchPosts } from '../apis/get/searchPosts';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
-import React, { useEffect, useState } from 'react';
 
 export const Search = () => {
   const { search } = useParams();

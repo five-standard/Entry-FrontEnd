@@ -9,8 +9,7 @@ import { Write } from '../pages/Write';
 import { Main } from '../pages/Main';
 
 const Router = () => {
-  
-  const [cookies, setCookie, removeCookie] = useCookies()
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   return <BrowserRouter>
     <Header />

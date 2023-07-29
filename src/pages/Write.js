@@ -15,12 +15,12 @@ export const Write = () => {
     likes: 0
   });
 
-  const changeHandler = (e) => {
+  const handleChange = (e) => {
     const {value, name} = e.target;
     setInput({...input, [name]: value});
   }
   
-  const clickHandler = () => {
+  const handleClick = () => {
     regPost(input).then(res => {
       if(res) { window.location.href = "/"; }
     })
@@ -29,11 +29,11 @@ export const Write = () => {
   return <Wrapper>
     <WritePost>
       <Form>
-        <input placeholder="제목을 입력해주세요" name="title" onChange={changeHandler}/>
+        <input placeholder="제목을 입력해주세요" name="title" onChange={handleChange}/>
         <hr />
-        <textarea placeholder="내용을 입력해주세요" name="data" onChange={changeHandler}/>
+        <textarea placeholder="내용을 입력해주세요" name="data" onChange={handleChange}/>
       </Form>
-      <Register onClick={clickHandler}>글 등록</Register>
+      <Register onClick={handleClick}>글 등록</Register>
     </WritePost>
   </Wrapper>
 };

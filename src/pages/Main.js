@@ -1,10 +1,9 @@
-import React from 'react';
-import { styled } from 'styled-components';
-import { Link } from 'react-router-dom';
 import { TextBox } from '../components/common/TextBox';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getPosts } from '../apis/get/getPosts';
+import { styled } from 'styled-components';
 import { useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 
 export const Main = () => {
   const [cookies, setCookie, removeCookie] = useCookies()
