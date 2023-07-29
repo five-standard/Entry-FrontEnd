@@ -1,41 +1,37 @@
-import { styled } from 'styled-components';
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { regPost } from '../apis/post/regPost';
+import { styled } from 'styled-components';
 import { useCookies } from 'react-cookie';
 
 export const Write = () => {
-  const [cookies, setCookie, removeCookie] = useCookies()
+  const date = new Date();
+  const [cookies, setCookies] = useCookies();
   const [input, setInput] = useState({
     title: "",
-    author: "",
-    date: "",
+    author: `${cookies.name}`,
+    date: `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`,
     data: "",
-    comments: []
+    comments: [],
+    likes: 0
   });
-  const date = new Date();
 
-  const onchange = (e) => {
+  const changeHandler = (e) => {
     const {value, name} = e.target;
     setInput({...input, [name]: value});
   }
-
-
+  
   const clickHandler = () => {
-    setInput({...input, author: cookies.name});
-    setInput({...input, date: `${date.getFullYear()}-${parseInt(date.getMonth)+1}-${date.getDate()}`});
-    regPost(input)
-    .then(res => {
-      console.log(res);
+    regPost(input).then(res => {
+      if(res) { window.location.href = "/"; }
     })
   }
 
   return <Wrapper>
     <WritePost>
       <Form>
-        <input placeholder="제목을 입력해주세요" name="title" onChange={onchange}/>
+        <input placeholder="제목을 입력해주세요" name="title" onChange={changeHandler}/>
         <hr />
-        <textarea placeholder="내용을 입력해주세요" name="data" onChange={onchange}/>
+        <textarea placeholder="내용을 입력해주세요" name="data" onChange={changeHandler}/>
       </Form>
       <Register onClick={clickHandler}>글 등록</Register>
     </WritePost>
@@ -54,7 +50,14 @@ const WritePost = styled.div`
   display: flex;
   flex-direction: column;
   width: 70%;
-  & input {
+`;
+
+const Form = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  border: 1px solid black;
+  & > input {
     height: 50px;
     border: none;
     outline: none;
@@ -64,7 +67,7 @@ const WritePost = styled.div`
     font-size: 30px;
     font-weight: bolder;
   }
-  & textarea {
+  & > textarea {
     height: 600px;
     border: 0;
     resize: none;
@@ -74,13 +77,6 @@ const WritePost = styled.div`
     font-size: 20px;
     font-weight: bolder;
   }
-`;
-
-const Form = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 15px;
-  border: 1px solid black;
 `;
 
 const Register = styled.button`
@@ -98,4 +94,4 @@ const Register = styled.button`
     transition: 0.2s;
     background-color: #515151;
   }
-`;
+`
