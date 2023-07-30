@@ -19,8 +19,8 @@ export const Login = () => {
   const handleClick = () => {
     signIn(account).then(res => {
       if(res) {
-        setCookie('accessToken', res.data.accessToken, { path: '/' })
-        setCookie('name', res.data.user.name, { path: '/' })
+        setCookie('accessToken', res.data.accessToken, { path: '/' });
+        setCookie('name', res.data.user.name, { path: '/' });
         window.location.href = "/";
       }else{ _password.current.focus(); }
     });
@@ -32,8 +32,8 @@ export const Login = () => {
       <LoginBox>
         <Auth>
           <h1>로그인</h1>
-          <input name="email" placeholder="이메일" onChange={handleChange} onKeyDown={(e) => {if(e.key==="Enter") _password.current.focus()}}/>
-          <input name="password" placeholder="비밀번호" onChange={handleChange} onKeyDown={(e) => {if(e.key==="Enter") handleClick()}} ref={_password} />
+          <input type="email" name="email" placeholder="이메일" onChange={handleChange} onKeyDown={(e) => {if(e.key==="Enter") _password.current.focus()}}/>
+          <input type="password" name="password" placeholder="비밀번호" onChange={handleChange} onKeyDown={(e) => {if(e.key==="Enter") handleClick()}} ref={_password} />
           <Register>아직 계정이 없으신가요? <a href="/register">회원가입</a></Register>
         </Auth>
         <button name="button" onClick={handleClick}>로그인</button>
