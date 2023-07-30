@@ -1,4 +1,5 @@
 import { TextBox } from '../components/common/TextBox';
+import { getPostsCount } from '../apis/get/getPostAll';
 import React, { useState, useEffect } from 'react';
 import { getPosts } from '../apis/get/getPosts';
 import { styled } from 'styled-components';
@@ -6,28 +7,36 @@ import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 
 export const Main = () => {
-  const [cookies, setCookie, removeCookie] = useCookies()
+  const [cookies, setCookie] = useCookies()
   const [response, setResponse] = useState([]);
   const [resLeng, setResLeng] = useState(0);
   const [count, setCount] = useState(0);
-  
+  const actived = { background: "#D3CFCF" };
+
   useEffect(() => {
-    getPosts(count)
-      .then(res => {
-        setResponse(res.data);
-      })
+    getPosts(count).then(res => { setResponse(res.data); })
+    getPostsCount().then(res => { setResLeng(Math.ceil(res/5));
+  })
   }, [count]);
 
-  const editcount = () => {
-
+  const paginationSet = () => {
+    let arr = [];
+    for(let i = 0; i<resLeng; i++) {
+      arr.push( <button name="page" id={i} key={i} onClick={handleClick}>{i+1}</button> );
+    }
+    return arr;
   }
 
-  const previous = () => {
-    if(count>0) setCount(count-1);
-  }
-
-  const next = () => {
-    if(count<resLeng) setCount(count+1);
+  const handleClick = (e) => {
+    if(e.target.name === "page") { 
+      setCount(e.target.id);
+    }
+    else if(e.target.name === "previous") {
+      if(count>0) setCount(count-1);
+    }
+    else if(e.target.name === "next") {
+      if(count<resLeng-1) setCount(count+1);
+    }
   }
 
   return <Wrapper>
@@ -41,15 +50,14 @@ export const Main = () => {
         }
       {
         response?.map(data => {
-          return (
-            <TextBox Title={data.title} Date={data.date} Author={data.author} Likes={data.likes} Id={data.id} key={data.id} />
-          )
+          return ( <TextBox Title={data.title} Date={data.date} Author={data.author} Likes={data.likes} Id={data.id} key={data.id} /> )
         })
       }
     </Posts>
     <Pagination>
-      <button onClick={previous}>〈</button>
-      <button onClick={next}>〉</button>
+      <button name="previous" onClick={handleClick}>〈</button>
+      { paginationSet() }
+      <button name="next" onClick={handleClick}>〉</button>
     </Pagination>
   </Wrapper>
 };
@@ -70,6 +78,7 @@ const Pagination = styled.div`
     width: 40px;
     height: 40px;
     border: none;
+    background: #EFEAEA;
     border-radius: 10px;
     font-size: 20px;
     font-weight: bolder;
