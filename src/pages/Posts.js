@@ -1,18 +1,40 @@
 import { getPostDtail } from '../apis/get/getPostDetail';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { useCookies } from 'react-cookie';
 
-export const Posts = () => {  
+export const Posts = () => { 
+  const [cookies, setCookie] = useCookies(); 
   const { id } = useParams();
   const [response, setResponse] = useState({});
+  const [comment, setComment] = useState([]);
+  const _comment = useRef();
 
   useEffect(() => {
-    getPostDtail(id)
-      .then(res => {
-        setResponse(res.data);
-      })
+    getPostDtail(id).then(res => {
+      setResponse(res.data);
+      setComment(res.data.comments);
+    })
   }, [id]) 
+
+  const handleLike = () => {
+  }
+
+  const handleChange = (e) => {
+    const { value } = e.target
+  }
+
+  const handleRemoveComment = (e) => {
+
+  }
+
+  const handlePost = () => {
+    setComment([...comment, {
+      author: cookies.name,
+      data: _comment.current.value
+    }]);
+  }
 
   return <Wrapper>
     <Post>
@@ -23,21 +45,25 @@ export const Posts = () => {
         </div>
         <Right>
           <h1>{response.likes}</h1>
-          <img src="/imgs/Like.svg" alt="Likes"/>
-          <img src="/imgs/Menu.svg"alt="Menu"/>
+          <img src="/imgs/Like.svg" onClick={handleLike} alt="Likes"/>
+          <img src="/imgs/Menu.svg" alt="Menu"/>
         </Right>
       </Top>
       <hr />
       <Data>{response.data}</Data>
     </Post>
     <Comment>
-      <h1>총 <span>1개</span>의 댓글이 있습니다</h1>
+      <h1>총 <span>{comment.length}개</span>의 댓글이 있습니다</h1>
       <div>
-        <textarea />
-        <button></button>
+        <textarea ref={_comment} />
+        <button onClick={handlePost}></button>
       </div>
       <ul>
-        <li>six-standard - 안녕하세요</li>
+        {
+          comment.map((item, index) => {
+            return ( <li key={index}>{item.author} - {item.data}<button onClick={handleRemoveComment}></button></li>)
+          })
+        }
       </ul>
     </Comment>
   </Wrapper>
@@ -71,6 +97,11 @@ const Right = styled.div`
   justify-content: space-around;
   align-items: center;
   gap: 20px;
+  & > img {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `
 
 const Comment = styled.div`
@@ -78,15 +109,15 @@ const Comment = styled.div`
   flex-direction: column;
   align-items: center;
   width: 70%;
-  gap: 10px;
   height: 150px;
+  gap: 10px;
   margin-bottom: 20px;
   & > div {
     display: flex;
     align-items: center;
     gap: 20px;
     width: 90%;
-    height: 100%;
+    height: 100px;
     & > textarea {
     border: 2px solid black;
     width: 90%;
@@ -96,8 +127,11 @@ const Comment = styled.div`
     }
     & > button {
     width: 100px;
-    height: 100%;
+    height: 100px;
     }
+  & li { 
+    list-style: none; 
+  }
   }
 `
 
