@@ -34,7 +34,8 @@ export const Login = () => {
           <h1>로그인</h1>
           <input type="email" name="email" placeholder="이메일" onChange={handleChange} onKeyDown={(e) => {if(e.key==="Enter") _password.current.focus()}}/>
           <input type="password" name="password" placeholder="비밀번호" onChange={handleChange} onKeyDown={(e) => {if(e.key==="Enter") handleClick()}} ref={_password} />
-          <Register>아직 계정이 없으신가요? <a href="/register">회원가입</a></Register>
+          <BottomText>아직 계정이 없으신가요? <a href="/register">회원가입</a></BottomText>
+          <BottomText>계정을 잃어버리셨나요? <a href="/find">계정 찾기</a></BottomText>
         </Auth>
         <button name="button" onClick={handleClick}>로그인</button>
       </LoginBox>
@@ -111,9 +112,9 @@ const Auth = styled.div`
   & h1:nth-child(2) { font-size: 10px; }
 `
 
-const Register = styled.h1`
+const BottomText = styled.h1`
   align-self: flex-start;
   font-size: 13px;
-  margin-top: -15px;
+  margin-top: -20px;
   color: gray;
 `;

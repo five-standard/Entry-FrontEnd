@@ -7,6 +7,7 @@ import { Login } from '../pages/Login';
 import { Posts } from '../pages/Posts';
 import { Write } from '../pages/Write';
 import { Main } from '../pages/Main';
+import { Find } from '../pages/Find';
 
 const Router = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -24,11 +25,13 @@ const Router = () => {
           <Route path="/Register" element={<Register />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/write" element={<Login />} />
+          <Route path="/find" element={<Find />} />
         </>
         : <>
         <Route path="/Register" element={<Main />} />
         <Route path="/Login" element={<Main />} />
         <Route path="/write" element={<Write />} />
+        <Route path="/find" element={<Main />} />
         </>
       }
     </Routes>
