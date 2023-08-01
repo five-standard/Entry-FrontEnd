@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { useCookies } from 'react-cookie';
-import { Link } from 'react-router-dom';
 import { TextBox } from '../components/common/TextBox';
 import { getPostsCount } from '../apis/get/getPostAll';
 import { getPosts } from '../apis/get/getPosts';
+import { Button } from '../components/common/Button';
 
 export const Main = () => {
   const [cookies, ,] = useCookies()
@@ -20,9 +20,7 @@ export const Main = () => {
 
   const paginationSet = () => {
     let arr = [];
-    for(let i = 0; i<resLeng; i++) {
-      arr.push( <button name="page" id={i} key={i} onClick={handleClick}>{i+1}</button> );
-    }
+    for(let i = 0; i<resLeng; i++) { arr.push( <button name="page" id={i} key={i} onClick={handleClick}>{i+1}</button> ); }
     return arr;
   }
 
@@ -38,9 +36,9 @@ export const Main = () => {
   return <Wrapper>
     <Posts>
       {
-        cookies.accessToken
-        ?<Write to="/write">글 작성하기</Write>
-        :<Margin />
+        cookies.accessToken?
+        <Button To="/write" Text="글 작성하기" Width={220} Style={{alignSelf: "flex-end"}}/>:
+        <Margin />
       }
       {
         response?.map(data => {
@@ -60,7 +58,8 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 50px;
+  justify-content: center;
+  height: 853px;
 `
 
 const Pagination = styled.div`
@@ -71,11 +70,9 @@ const Pagination = styled.div`
   & > button { //페이지네이션 버튼 (<, 1, 2, 3, >)
     width: 40px;
     height: 40px;
-    border: none;
     background: #EFEAEA;
     border-radius: 10px;
     font-size: 20px;
-    font-weight: bolder;
     &:hover { border: 1px solid black; } //버튼 호버시 테두리 생성
   }
 `
@@ -89,23 +86,3 @@ const Posts = styled.div`
 `
 
 const Margin = styled.div` height: 53px; `
-
-const Write = styled(Link)`
-  display: flex;
-  align-self: flex-end;
-  justify-content: center;
-  width: 220px;
-  padding: 10px;
-  background: gray;
-  transition: 0.2s;
-  border-radius: 15px;
-  box-sizing: border-box;
-  color: white;
-  font-size: 25px;
-  font-weight: 600;
-  text-decoration: none;
-  &:hover { //호버시 배경색 변경 (진한 회색)
-    transition: 0.2s;
-    background: #515151;
-  }
-`

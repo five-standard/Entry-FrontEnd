@@ -10,7 +10,7 @@ import { Main } from '../pages/Main';
 import { Find } from '../pages/Find';
 
 const Router = () => {
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies,] = useCookies();
 
   return <BrowserRouter>
     <Header />

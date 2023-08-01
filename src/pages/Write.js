@@ -1,11 +1,12 @@
-import React, { useState, useEffect} from 'react';
-import { regPost } from '../apis/post/regPost';
 import { styled } from 'styled-components';
 import { useCookies } from 'react-cookie';
+import React, { useState } from 'react';
+import { regPost } from '../apis/post/regPost';
+import { Button } from '../components/common/Button';
 
 export const Write = () => {
   const date = new Date();
-  const [cookies, setCookies] = useCookies();
+  const [cookies,] = useCookies();
   const [input, setInput] = useState({
     title: "",
     author: `${cookies.name}`,
@@ -33,7 +34,7 @@ export const Write = () => {
         <hr />
         <textarea placeholder="내용을 입력해주세요" name="data" onChange={handleChange}/>
       </Form>
-      <Register onClick={handleClick}>글 등록</Register>
+      <Button Text="글 등록" Click={handleClick} Width={200} Height={50} Style={{alignSelf: "flex-end"}} />
     </WritePost>
   </Wrapper>
 };
@@ -42,7 +43,8 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 60px;
+  justify-content: center;
+  height: 853px;
 `;
 
 const WritePost = styled.div`
@@ -59,39 +61,16 @@ const Form = styled.div`
   border: 1px solid black;
   & > input {
     height: 50px;
-    border: none;
-    outline: none;
     padding: 10px;
     box-sizing: border-box;
     border-radius: inherit;
     font-size: 30px;
-    font-weight: bolder;
   }
   & > textarea {
     height: 600px;
-    border: 0;
-    resize: none;
-    outline: none;
     padding: 10px;
     border-radius: inherit;
     font-size: 20px;
     font-weight: bolder;
   }
 `;
-
-const Register = styled.button`
-  align-self: flex-end;
-  width: 200px;
-  height: 50px;
-  border: none;
-  transition: 0.2s;
-  border-radius: 15px;
-  background: #8b8b8b;
-  color: #ffffff;
-  font-size: 25px;
-  font-weight: 600;
-  &:hover {
-    transition: 0.2s;
-    background-color: #515151;
-  }
-`

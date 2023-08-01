@@ -1,8 +1,8 @@
-import { TextBox } from '../components/common/TextBox';
-import { searchPosts } from '../apis/get/searchPosts';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { searchPosts } from '../apis/get/searchPosts';
+import { TextBox } from '../components/common/TextBox';
 
 export const Search = () => {
   const { search } = useParams();
@@ -30,20 +30,20 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   margin-top: 60px;
-`;
+`
 
 const Posts = styled.div`
   gap: 20px;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
   width: 60%;
   padding: 20px;
   margin-top: 30px;
-`;
+  box-sizing: border-box;
+`
 
 const Result = styled.h1`
   color: gray;
   font-size: 30px;
   & > span { color: black; }
-`;
+`

@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { signIn } from '../apis/auth/signIn';
-import { styled } from 'styled-components';
 import { useCookies } from 'react-cookie';
+import { styled } from 'styled-components';
+import { signIn } from '../apis/auth/signIn';
+import { Button } from '../components/common/Button';
+import { Logo } from '../components/common/Logo';
 
 export const Login = () => {
-  const [cookies, setCookie] = useCookies()
+  const [, setCookie] = useCookies()
   const [account, setAccount] = useState({
     email: "",
     password: "",
@@ -28,7 +30,7 @@ export const Login = () => {
 
   return <Wrapper>
     <Container>
-      <LogoBox>TextBoard</LogoBox>
+      <Logo />
       <LoginBox>
         <Auth>
           <h1>로그인</h1>
@@ -37,7 +39,7 @@ export const Login = () => {
           <BottomText>아직 계정이 없으신가요? <a href="/register">회원가입</a></BottomText>
           <BottomText>계정을 잃어버리셨나요? <a href="/find">계정 찾기</a></BottomText>
         </Auth>
-        <button name="button" onClick={handleClick}>로그인</button>
+        <Button Click={handleClick} Text="로그인" Width={250} Height={50} />
       </LoginBox>
     </Container>
   </Wrapper>
@@ -56,20 +58,8 @@ const Container = styled.div`
   display: flex;
   width: 800px;
   height: 650px;
-  background: #ffffff;
   border-radius: 15px;
   border: 2px solid black;
-`
-
-const LogoBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 400px;
-  border-radius: 15px;
-  background: #EFEAEA;
-  box-shadow: 4px 0px 6px gray;
-  font-size: 40px;
 `
 
 const LoginBox = styled.div`
@@ -80,21 +70,6 @@ const LoginBox = styled.div`
   width: 400px;
   padding-top: 50px;
   padding-bottom: 50px;
-  & > button {
-    width: 250px;
-    height: 50px;
-    border: 0px;
-    background: #8B8B8B;
-    border-radius: 15px;
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 600;
-    transition: 0.2s;
-    &:hover {
-      transition: 0.2s;
-      background-color: #515151;
-    }
-  }
 `
 
 const Auth = styled.div`
@@ -104,10 +79,7 @@ const Auth = styled.div`
   flex-direction: column;
   & > input {
     width: 250px;
-    border: 0;
-    outline: none;
     border-bottom: 1px solid black;
-    font-weight: bolder;
   }
   & h1:nth-child(2) { font-size: 10px; }
 `
