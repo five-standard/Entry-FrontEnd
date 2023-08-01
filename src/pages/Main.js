@@ -1,17 +1,16 @@
-import { TextBox } from '../components/common/TextBox';
-import { getPostsCount } from '../apis/get/getPostAll';
 import React, { useState, useEffect } from 'react';
-import { getPosts } from '../apis/get/getPosts';
 import { styled } from 'styled-components';
 import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
+import { TextBox } from '../components/common/TextBox';
+import { getPostsCount } from '../apis/get/getPostAll';
+import { getPosts } from '../apis/get/getPosts';
 
 export const Main = () => {
-  const [cookies, setCookie] = useCookies()
+  const [cookies, ,] = useCookies()
   const [response, setResponse] = useState([]);
   const [resLeng, setResLeng] = useState(0);
   const [count, setCount] = useState(0);
-  const actived = { background: "#D3CFCF" };
 
   useEffect(() => {
     getPosts(count).then(res => { setResponse(res.data); })
@@ -28,26 +27,21 @@ export const Main = () => {
   }
 
   const handleClick = (e) => {
-    if(e.target.name === "page") { 
+    if(e.target.name === "page") 
       setCount(e.target.id);
-    }
-    else if(e.target.name === "previous") {
+    else if(e.target.name === "previous") 
       if(count>0) setCount(count-1);
-    }
-    else if(e.target.name === "next") {
+    else if(e.target.name === "next")
       if(count<resLeng-1) setCount(count+1);
-    }
   }
 
   return <Wrapper>
     <Posts>
-        {
-          cookies.accessToken
-          ?<Write to="/write">
-            <h1>글 작성하기</h1>
-          </Write>
-          :<Margin />
-        }
+      {
+        cookies.accessToken
+        ?<Write to="/write">글 작성하기</Write>
+        :<Margin />
+      }
       {
         response?.map(data => {
           return ( <TextBox Title={data.title} Date={data.date} Author={data.author} Likes={data.likes} Id={data.id} key={data.id} /> )
@@ -74,7 +68,7 @@ const Pagination = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 30px;
-  & > button {
+  & > button { //페이지네이션 버튼 (<, 1, 2, 3, >)
     width: 40px;
     height: 40px;
     border: none;
@@ -82,7 +76,7 @@ const Pagination = styled.div`
     border-radius: 10px;
     font-size: 20px;
     font-weight: bolder;
-    &:hover { border: 1px solid black; }
+    &:hover { border: 1px solid black; } //버튼 호버시 테두리 생성
   }
 `
 
@@ -107,9 +101,10 @@ const Write = styled(Link)`
   border-radius: 15px;
   box-sizing: border-box;
   color: white;
+  font-size: 25px;
+  font-weight: 600;
   text-decoration: none;
-  & > h1 { font-size: 25px; }
-  &:hover {
+  &:hover { //호버시 배경색 변경 (진한 회색)
     transition: 0.2s;
     background: #515151;
   }
