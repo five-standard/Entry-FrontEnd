@@ -7,7 +7,10 @@ export const Header = () => {
   const [cookies, , removeCookie] = useCookies();
   const [search, setSearch] = useState("");
 
-  const handleSearch = () => { window.location.href = `/search/${search}`;  }
+  const handleSearch = () => { 
+    if(search!=="") { window.location.href = `/search/${search}`; }
+    else { alert("검색어를 입력해주세요"); }
+  }
 
   const handleLogOut = (e) => {
     removeCookie("accessToken");
