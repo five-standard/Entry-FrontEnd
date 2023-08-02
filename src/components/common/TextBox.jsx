@@ -26,23 +26,20 @@ const Wrapper = styled.div`
   background: #EFEAEA;
   box-sizing: border-box;
 `
-
 const Left = styled.div`
   display: flex;
   flex-direction: column;
   & > h1:nth-child(2) { font-size: 20px; }
 `
-
 const Right = styled.div`
   display: flex;
   flex-direction: column;
   & > h1 { font-size: 25px; }
-`;
-
+`
 const Like = styled.div`
   gap: 10px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   h1 { font-size: 25px; }
-`;
+`

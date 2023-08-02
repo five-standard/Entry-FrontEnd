@@ -16,7 +16,7 @@ export const Main = () => {
     getPosts(count).then(res => { setResponse(res.data); })
     getPostsCount().then(res => { setResLeng(Math.ceil(res/5));
   })
-  }, [count]);
+  }, [count])
 
   const paginationSet = () => {
     let arr = [];
@@ -52,7 +52,7 @@ export const Main = () => {
       <button name="next" onClick={handleClick}>〉</button>
     </Pagination>
   </Wrapper>
-};
+}
 
 const Wrapper = styled.div`
   display: flex;
@@ -61,7 +61,6 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 853px;
 `
-
 const Pagination = styled.div`
   gap: 10px;
   display: flex;
@@ -76,7 +75,6 @@ const Pagination = styled.div`
     &:hover { border: 1px solid black; } //버튼 호버시 테두리 생성
   }
 `
-
 const Posts = styled.div`
   gap: 20px;
   display: flex;
@@ -84,5 +82,4 @@ const Posts = styled.div`
   flex-direction: column;
   width: 60%;
 `
-
 const Margin = styled.div` height: 53px; `

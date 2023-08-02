@@ -23,7 +23,7 @@ export const Search = () => {
       }
     </Posts>
   </Wrapper>
-};
+}
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,7 +31,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   margin-top: 60px;
 `
-
 const Posts = styled.div`
   gap: 20px;
   display: flex;
@@ -41,7 +40,6 @@ const Posts = styled.div`
   margin-top: 30px;
   box-sizing: border-box;
 `
-
 const Result = styled.h1`
   color: gray;
   font-size: 30px;

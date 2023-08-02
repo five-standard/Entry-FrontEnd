@@ -53,7 +53,6 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 853px;
 `
-
 const Container = styled.div`
   display: flex;
   width: 800px;
@@ -61,7 +60,6 @@ const Container = styled.div`
   border-radius: 15px;
   border: 2px solid black;
 `
-
 const LoginBox = styled.div`
   display: flex;
   align-items: center;
@@ -71,7 +69,6 @@ const LoginBox = styled.div`
   padding-top: 50px;
   padding-bottom: 50px;
 `
-
 const Auth = styled.div`
   gap: 30px;
   display: flex;
@@ -83,10 +80,9 @@ const Auth = styled.div`
   }
   & h1:nth-child(2) { font-size: 10px; }
 `
-
 const BottomText = styled.h1`
   align-self: flex-start;
   font-size: 13px;
   margin-top: -20px;
   color: gray;
-`;
+`

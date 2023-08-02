@@ -37,7 +37,7 @@ export const Write = () => {
       <Button Text="글 등록" Click={handleClick} Width={200} Height={50} Style={{alignSelf: "flex-end"}} />
     </WritePost>
   </Wrapper>
-};
+}
 
 const Wrapper = styled.div`
   display: flex;
@@ -45,15 +45,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   height: 853px;
-`;
-
+`
 const WritePost = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
   width: 70%;
-`;
-
+`
 const Form = styled.div`
   display: flex;
   flex-direction: column;
@@ -73,4 +71,4 @@ const Form = styled.div`
     font-size: 20px;
     font-weight: bolder;
   }
-`;
+`
