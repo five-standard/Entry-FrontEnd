@@ -29,6 +29,9 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     font-weight: bolder;
   }
+  ul {
+    padding-inline-start: 0;
+  }
 `;
 
 export default GlobalStyle;
