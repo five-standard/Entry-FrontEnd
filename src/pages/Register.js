@@ -22,7 +22,7 @@ export const Register = () => {
   }
 
   const handleClick = () => {
-    if(account.password !== check) { alert("Check your password") }
+    if(account.password !== check) { alert("Check your password"); }
     else {
       signUp(account).then(res => {
         res? 
@@ -44,11 +44,11 @@ export const Register = () => {
           <input type="password" name="passwordCheck" placeholder="비밀번호 확인" onChange={handleChange} onKeyDown={(e) => {if(e.key==="Enter") handleClick()}} ref={_passwordChk} />
           <Login>이미 계정이 있으신가요? <a href="/login">로그인</a></Login>
         </Auth>
-        <Button onClick={handleClick} Text="회원가입"/>
+        <Button Click={handleClick} Text="회원가입" Width={250} Height={50} />
       </RegisterBox>
     </Container>
   </Wrapper>
-};
+}
 
 
 const Wrapper = styled.div`
@@ -58,7 +58,6 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 853px;
 `
-
 const Container = styled.div`
   display: flex;
   width: 800px;
@@ -66,7 +65,6 @@ const Container = styled.div`
   border-radius: 15px;
   border: 2px solid black;
 `
-
 const RegisterBox = styled.div`
   display: flex;
   align-items: center;
@@ -76,7 +74,6 @@ const RegisterBox = styled.div`
   padding-top: 50px;
   padding-bottom: 50px;
 `
-
 const Auth = styled.div`
   gap: 30px;
   display: flex;
@@ -87,7 +84,6 @@ const Auth = styled.div`
     border-bottom: 1px solid black;
   }
 `
-
 const Login = styled.h1`
   align-self: flex-start;
   margin-top: -15px;
