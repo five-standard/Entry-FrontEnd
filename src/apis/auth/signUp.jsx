@@ -1,11 +1,5 @@
-import axios from "axios";
-import { baseURL } from "../baseUrl";
+import instance from "../axios";
 
 export const signUp = async (data) => {
-  try {
-    return await axios.post(`${baseURL}/register`, data);
-  } catch(err) {
-    console.log(`${err.response.status}: ${err.response.statusText}`);
-    alert(`${err.response.data}`);
-  }
+  return await instance.post(`/register`, data);
 }

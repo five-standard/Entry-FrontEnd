@@ -1,10 +1,5 @@
-import axios from "axios";
-import { baseURL } from "../baseUrl";
+import instance from "../axios";
 
-export const getPosts = async (count) => {
-  try {
-    return await axios.get(`${baseURL}/posts?_start=${count*5}&_limit=5`);
-  } catch(err) {
-    console.log(err);
-  }
+export const getPosts = async () => {
+  return await instance.get(`/posts`);
 }

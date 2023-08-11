@@ -1,10 +1,5 @@
-import axios from "axios";
-import { baseURL } from "../baseUrl";
+import instance from "../axios";
 
 export const regPost = async (data) => {
-  try {
-    return await axios.post(`${baseURL}/posts`, data);
-  } catch(err) {
-    console.log(`${err.response.status}: ${err.response.statusText}`);
-  }
+  return await instance.post(`/posts`, data);
 }
