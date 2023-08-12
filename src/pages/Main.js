@@ -2,35 +2,48 @@ import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { useCookies } from 'react-cookie';
 import { TextBox } from '../components/common/TextBox';
-import { getPostsCount } from '../apis/get/getPostAll';
-import { getPosts } from '../apis/get/getPosts';
 import { Button } from '../components/common/Button';
+import { getPosts } from '../apis/get/getPosts';
 
 export const Main = () => {
-  const [cookies, ,] = useCookies()
-  const [response, setResponse] = useState([]);
-  const [resLeng, setResLeng] = useState(0);
   const [count, setCount] = useState(0);
+  const [response, setResponse] = useState([]);
+  const [leng, setLeng] = useState(0);
+  const [cookies,] = useCookies();
 
   useEffect(() => {
-    getPosts(count).then(res => { setResponse(res.data); })
-    getPostsCount().then(res => { setResLeng(Math.ceil(res/5));
-  })
-  }, [count])
+    getPosts().then(res => { 
+      setResponse(res.data); 
+      setLeng(Math.ceil(res.data.length/5))
+    })
+  }, [])
 
-  const paginationSet = () => {
+  const PaginationSet = () => {
     let arr = [];
-    for(let i = 0; i<resLeng; i++) { arr.push( <button name="page" id={i} key={i} onClick={handleClick}>{i+1}</button> ); }
+    for(let i = 0; i<leng; i++) {
+      arr.push( <button name="page" id={i} key={i} onClick={handleClick}>{i+1}</button> ); 
+    }
+    return arr;
+  }
+
+  const PostSet = () => {
+    let arr = [];
+    for(let i = count*5; i<count*5+5; i++) {
+      const tmp = response[i];
+      if(tmp) {
+        arr.push( <TextBox Title={tmp.title} Date={tmp.date} Author={tmp.author} Likes={tmp.likes} Id={tmp.id} key={tmp.id} /> )
+      }
+    }
     return arr;
   }
 
   const handleClick = (e) => {
     if(e.target.name === "page") 
       setCount(e.target.id);
-    else if(e.target.name === "previous") 
+    else if(e.target.id === "previous") 
       if(count>0) setCount(count-1);
-    else if(e.target.name === "next")
-      if(count<resLeng-1) setCount(count+1);
+    else if(e.target.id === "next")
+      if(count<leng-1) setCount(count+1);
   }
 
   return <Wrapper>
@@ -41,14 +54,12 @@ export const Main = () => {
         <Margin />
       }
       {
-        response?.map(data => {
-          return ( <TextBox Title={data.title} Date={data.date} Author={data.author} Likes={data.likes} Id={data.id} key={data.id} /> )
-        })
+        response.length!==0 ? PostSet() : undefined
       }
     </Posts>
     <Pagination>
       <button name="previous" onClick={handleClick}>〈</button>
-      { paginationSet() }
+      { PaginationSet(leng) }
       <button name="next" onClick={handleClick}>〉</button>
     </Pagination>
   </Wrapper>

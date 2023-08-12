@@ -1,7 +1,10 @@
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 export const TextBox = ({ Title, Date, Author, Likes, Id }) => {
-  return <Wrapper onClick={() => window.location.href = `http://localhost:3000/posts/${Id}`}>
+  const navigate = useNavigate();
+
+  return <Wrapper onClick={() => navigate(`/posts/${Id}`)}>
     <Left> <h1>{Title}</h1> <h1>{Date}</h1> </Left>
     <Right>
       <h1>{Author}</h1>

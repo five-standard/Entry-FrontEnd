@@ -1,5 +1,5 @@
 import instance from "../axios";
 
-export const getPosts = async (count) => {
+export const getPosts = async () => {
   return await instance.get(`/posts`);
 }
