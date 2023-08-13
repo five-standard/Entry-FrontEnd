@@ -1,8 +1,10 @@
+import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { useCookies } from 'react-cookie';
 import React, { useState } from 'react';
-import { regPost } from '../apis/post/regPost';
 import { Button } from '../components/common/Button';
+import { regPost } from '../apis/post/regPost';
 
 export const Write = () => {
   const date = new Date();
@@ -15,6 +17,8 @@ export const Write = () => {
     comments: [],
     likes: 0
   });
+  const isPc = useMediaQuery({ query: "(min-width: 820px)" }); //true: PC, false: Mobile
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const {value, name} = e.target;
@@ -23,18 +27,21 @@ export const Write = () => {
   
   const handleClick = () => {
     regPost(input).then(res => {
-      if(res) { window.location.href = "/"; }
+      if(res) {
+        alert("글이 정상적으로 등록되었습니다.");
+        navigate("/");
+      }
     })
   }
 
   return <Wrapper>
     <WritePost>
-      <Form>
+      <Form pc={isPc}>
         <input placeholder="제목을 입력해주세요" name="title" onChange={handleChange}/>
         <hr />
         <textarea placeholder="내용을 입력해주세요" name="data" onChange={handleChange}/>
       </Form>
-      <Button Text="글 등록" Click={handleClick} Width={200} Height={50} Style={{alignSelf: "flex-end"}} />
+      <Button Text="글 등록" Click={handleClick} Width={isPc?200:130} Height={50} Style={{alignSelf: "flex-end"}} />
     </WritePost>
   </Wrapper>
 }
@@ -46,12 +53,14 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 853px;
 `
+
 const WritePost = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
   width: 70%;
 `
+
 const Form = styled.div`
   display: flex;
   flex-direction: column;
@@ -62,13 +71,13 @@ const Form = styled.div`
     padding: 10px;
     box-sizing: border-box;
     border-radius: inherit;
-    font-size: 30px;
+    font-size: ${props => props.pc?"30px":"25px"};
   }
   & > textarea {
     height: 600px;
     padding: 10px;
     border-radius: inherit;
-    font-size: 20px;
+    font-size: ${props => props.pc?"20px":"15px"};
     font-weight: bolder;
   }
 `
