@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 export const Logo = () => {
-  return <Wrapper> TextBoard </Wrapper>
+  return <Wrapper>TextBoard</Wrapper>
 }
 
 const Wrapper = styled.div`

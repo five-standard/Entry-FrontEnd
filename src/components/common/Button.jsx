@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const Button = ({ Text, Width, Height, Click, To, Style }) => {
   return <Wrapper _width={Width} _height={Height} onClick={Click} to={To?To:undefined} style={Style?Style:undefined}>
-    <h1>{Text}</h1>
+    {Text}
   </Wrapper>
 }
 
@@ -19,13 +19,11 @@ const Wrapper = styled(Link)`
   border-radius: 15px;
   background: #8b8b8b;
   box-sizing: border-box;
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: bolder;
   &:hover {
     transition: 0.2s;
     background-color: #515151;
-  }
-  & > h1 {
-    color: #ffffff;
-    font-size: 25px;
-    font-weight: bolder;
   }
 `
