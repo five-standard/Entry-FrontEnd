@@ -17,7 +17,7 @@ const Router = () => {
     <Routes>
       <Route path="*" element={<>404 Not Found</>} />
       <Route path="/" element={<Main />} />
-      <Route path="/search/:search" element={<Search />} />
+      <Route path="/search/:data" element={<Search />} />
       <Route path="/posts/:id" element={<Posts />} />
       {
         !cookies.accessToken
