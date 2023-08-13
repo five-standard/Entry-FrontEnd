@@ -1,19 +1,23 @@
+import { useMediaQuery } from 'react-responsive';
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { signUp } from '../apis/auth/signUp';
 import { Button } from '../components/common/Button';
 import { Logo } from '../components/common/Logo';
+import { signUp } from '../apis/auth/signUp';
 
 export const Register = () => {
-  const [check, setCheck] = useState("");
   const [account, setAccount] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const _email = useRef();
-  const _password = useRef();
+  const [check, setCheck] = useState("");
+  const isPc = useMediaQuery({ query: "(min-width: 820px)" }); //true: PC, false: Mobile
+  const navigate = useNavigate();
   const _passwordChk = useRef();
+  const _password = useRef();
+  const _email = useRef();
 
   const handleChange = (e) => {
     const {value, name} = e.target;
@@ -22,29 +26,42 @@ export const Register = () => {
   }
 
   const handleClick = () => {
-    if(account.password !== check) { alert("Check your password"); }
-    else {
+    if(account.password === check) {
       signUp(account).then(res => {
-        res? 
-        window.location.href = "/login":
-        _passwordChk.current.focus()
+        if(res) {
+          alert("계정이 생성되었습니다");
+          navigate("/login");
+        } else { _passwordChk.current.focus(); }
       });
+    } else alert("Check your password");
+  }
+
+  const handleKeydown = (e) => {
+    if(e.key==="Enter") {
+      if(e.target.name==="name") _email.current.focus();
+      else if(e.target.name==="email") _password.current.focus();
+      else if(e.target.name==="password") _passwordChk.current.focus();
+      else if(e.target.name==="passwordCheck") handleClick();
     }
   }
 
   return <Wrapper>
-    <Container>
-      <Logo />
+    <Container pc={isPc}>
+      {
+        isPc
+        ? <Logo />
+        : undefined 
+      }
       <RegisterBox>
         <Auth>
           <h1>회원가입</h1>
-          <input name="name" placeholder="이름" onChange={handleChange} onKeyDown={(e) => {if(e.key==="Enter") _email.current.focus()}}/>
-          <input name="email" placeholder="이메일" onChange={handleChange} onKeyDown={(e) => {if(e.key==="Enter") _password.current.focus();}} ref={_email} />
-          <input type="password" name="password" placeholder="비밀번호" onChange={handleChange} onKeyDown={(e) => {if(e.key==="Enter") _passwordChk.current.focus();}} ref={_password} />
-          <input type="password" name="passwordCheck" placeholder="비밀번호 확인" onChange={handleChange} onKeyDown={(e) => {if(e.key==="Enter") handleClick()}} ref={_passwordChk} />
+          <input name="name" placeholder="이름" onChange={handleChange} onKeyDown={handleKeydown}/>
+          <input name="email" placeholder="이메일" onChange={handleChange} onKeyDown={handleKeydown} ref={_email} />
+          <input type="password" name="password" placeholder="비밀번호" onChange={handleChange} onKeyDown={handleKeydown} ref={_password} />
+          <input type="password" name="passwordCheck" placeholder="비밀번호 확인" onChange={handleChange} onKeyDown={handleKeydown} ref={_passwordChk} />
           <Login>이미 계정이 있으신가요? <a href="/login">로그인</a></Login>
         </Auth>
-        <Button Click={handleClick} Text="회원가입" Width={250} Height={50} />
+        <Button Click={handleClick} Text="회원가입" Width={isPc?250:200} Height={50} />
       </RegisterBox>
     </Container>
   </Wrapper>
@@ -58,13 +75,15 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 853px;
 `
+
 const Container = styled.div`
   display: flex;
-  width: 800px;
-  height: 650px;
+  width: ${props => props.pc?"800px":"350px"};
+  height: ${props => props.pc?"650px":"550px"};
   border-radius: 15px;
   border: 2px solid black;
 `
+
 const RegisterBox = styled.div`
   display: flex;
   align-items: center;
@@ -74,6 +93,7 @@ const RegisterBox = styled.div`
   padding-top: 50px;
   padding-bottom: 50px;
 `
+
 const Auth = styled.div`
   gap: 30px;
   display: flex;
@@ -84,6 +104,7 @@ const Auth = styled.div`
     border-bottom: 1px solid black;
   }
 `
+
 const Login = styled.h1`
   align-self: flex-start;
   margin-top: -15px;
