@@ -1,102 +1,157 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 import { styled } from 'styled-components';
 import { useCookies } from 'react-cookie';
-import { getPostDtail } from '../apis/get/getPostDetail';
+import { getPostDetail } from '../apis/get/getPostDetail';
 import { commentPost } from '../apis/post/commentPost';
+import { deletePost } from '../apis/post/deletePost';
+import { likePost } from '../apis/post/likePost';
 
-export const Posts = () => { 
-  const [cookies,] = useCookies(); 
-  const { id } = useParams();
-  const _comment = useRef();
+export const Posts = () => {
   const [response, setResponse] = useState({});
-  const [comment, setComment] = useState([]);
-  const [edit, setEdit] = useState(-1);
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+  const [likes, setLikes] = useState([]);
+  const [edit, setEdit] = useState(-1); 
+  const [cookies,] = useCookies();
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const _init = useRef(false);
+  const isPc = useMediaQuery({ query: "(min-width: 820px)" }); //true: PC, false: Mobile
 
   useEffect(() => {
-    getPostDtail(id).then(res => {
+    getPostDetail(id).then(res => {
       setResponse(res.data);
-      setComment(res.data.comments);
+      setComments(res.data.comments);
+      setLikes(res.data.likes);
     })
-  }, [id]) 
+  }, []) 
+
+  useEffect(() => { //댓글목록 수정시 업로드
+    if(_init.current) { commentPost(comments, id); }
+  }, [comments])
 
   useEffect(() => {
-    commentPost(comment, id);
-  }, [id, comment])
+    if(_init.current) { likePost(likes, id); }
+    else { _init.current = true; }
+  }, [likes])
 
-  const ResetComment = (e) => {
-    e.preventDefault();
-    _comment.current.value = "";
-  }
-
-  const handleEditButton = (e) => {
-    _comment.current.value = comment[e.target.id].data;
-    setEdit(e.target.id);
-  }
-
-  const handleEdit = (e) => {
+  const handleCEdit = (e) => { //댓글 수정 후 이벤트
     if(e.key === "Enter") {
-      let tmp = [...comment]; //임시 배열을 생성한다
-      if(_comment.current.value==="") { tmp.splice(edit, 1); } //입력값이 비었다면 해당 댓글을 삭제한다
-      else { tmp[edit].data = _comment.current.value; } //입력값이 안 비었다면 해당 댓글을 수정한다
-      tmp.splice(edit, 1);
-      setComment(tmp);
+      let tmp = [...comments]; //임시 배열을 생성한다
+      if(comment==="") { tmp.splice(edit, 1); } //입력값이 비었다면 해당 댓글을 삭제한다
+      else { tmp[edit].data = comment; } //입력값이 안 비었다면 해당 댓글을 수정한다
+      setComments(tmp);
       ResetComment(e);
       setEdit(-1);
     }
   }
 
-  const handlePost = (e) => {
+  const handleCEditButton = (e) => { //댓글 수정 버튼 이벤트
+    setComment(comments[e.target.id].data);
+    setEdit(e.target.id);
+  }
+
+  const handleCPost = (e) => { //댓글 업로드 이벤트
     if(e.key === "Enter") {
       if(cookies.accessToken) {
-        setComment([...comment, {
-          author: cookies.name,
-          data: _comment.current.value
-        }]);
-        ResetComment(e);
-      }
-      else { 
+        if(comment!=="") {
+          setComments(comments => [...comments, {
+            author: cookies.name,
+            data: comment
+          }]);
+          ResetComment(e);
+        } else {
+          alert("글을 작성해주세요.");
+          ResetComment(e);
+        }
+      } else { 
         alert("해당 기능은 로그인이 필요합니다."); 
         ResetComment(e);
       }
     }
   }
 
+  const handleChange = (e) => { //댓글 수정 감지
+    setComment(e.target.value);
+  }
+
+  const ResetComment = (e) => { //댓글 입력창 초기화
+    e.preventDefault();
+    setComment("");
+  }
+
+  const handleLike = () => {
+    if(cookies.accessToken) {
+      if(likes.includes(cookies.name)) {
+        let tmp = [...likes];
+        tmp = tmp.filter(data =>  data !== cookies.name);
+        setLikes(tmp);
+      } else {
+        setLikes(likes => [...likes, cookies.name]);
+      }
+    } else { alert("해당 기능은 로그인이 필요합니다."); }
+  }
+
+  const handleEdit = () => {
+    navigate(`/editPost/${id}`);
+  }
+
+  const handleDelete = () => {
+    if(window.confirm("정말 삭제하시겠습니까?")) {
+      deletePost(id).then(res => {
+        if(res) {
+          alert("삭제되었습니다");
+          navigate("/");
+        }
+      })
+    }
+  }
+
+
   return <Wrapper comments={comment.length}>
     <Post>
-      <Top> 
+      <Top pc={isPc}> 
         <div>
           <Title>{response.title}</Title>
           <h2>{response.author} | {response.date}</h2>
         </div>
-        <Right>
-          <h1>{response.likes}</h1>
-          <img src="/imgs/Like.svg" onClick={handleLike} alt="Likes"/>
-          <img src="/imgs/Menu.svg" alt="Menu"/>
+        <Right pc={isPc}>
+          <h1>{likes?likes.length:0}</h1>
+          <Like src="/imgs/Like.svg" alt="Likes" width="30" liked={cookies.name?likes.includes(cookies.name):false} onClick={handleLike} title="좋아요" />
+          {
+            response.author === cookies.name
+            ? <>
+              <img src="/imgs/edit.svg" alt="Edit" width="30" title="글 수정하기" onClick={handleEdit} />
+              <img src="/imgs/delete.svg" alt="Delete" width="30" title="글 삭제하기" onClick={handleDelete}/>
+            </>
+            : undefined
+          }
         </Right>
       </Top>
       <hr />
-      <Data>{response.data}</Data>
+      <Data pc={isPc}>{response.data}</Data>
     </Post>
-    <Comment>
+    <Comment pc={isPc}>
       <div>
-        <h1>총 <span>{comment.length}개</span>의 댓글이 있습니다</h1>
-        <textarea ref={_comment} onKeyDown={edit===-1?handlePost:handleEdit} placeholder={edit===-1?"다 작성하신 후 엔터를 누르면 자동으로 등록됩니다.":"이 상태에서 엔터를 누르면 댓글이 삭제됩니다."}/>
+        <h1>총 <span>{comments.length}개</span>의 댓글이 있습니다</h1>
+        <textarea onChange={handleChange} value={comment} onKeyDown={edit===-1?handleCPost:handleCEdit} placeholder={edit===-1?"다 작성하신 후 엔터를 누르면 자동으로 등록됩니다.":"이 상태에서 엔터를 누르면 댓글이 삭제됩니다."}/>
       </div>
       <div>
         <ul>
           {
-            comment.map((item, index) => {
-              return ( <li key={index}>
+            comments.map((item, index) => {
+              return <li key={index}>
                 <div>
                   {
-                    item.author===cookies.name?
-                    <button id={index} onClick={handleEditButton}>✏️</button>:
-                    undefined
+                    item.author===cookies.name
+                    ? <button id={index} onClick={handleCEditButton}>✏️</button>
+                    : undefined
                   }
                   <h1>{item.author} - <span>{item.data}</span></h1>
-                  </div>
-                </li> )
+                </div>
+              </li>
             })
           }
         </ul>
@@ -121,18 +176,25 @@ const Post = styled.div`
 `
 
 const Top = styled.div`
+  gap: 10px;
   display: flex;
+  flex-direction: ${props => props.pc?"row":"column"};
   justify-content: space-between;
-  align-items: center;
-  h2 { font-size: 25px; }
+  align-items: ${props => props.pc?"center":"flex-start"};
+  h1 { font-size: ${props => props.pc?"":"30px"}; }
+  h2 { font-size: ${props => props.pc?"":"20px"}; }
 `
 
 const Right = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  gap: 20px;
-  & > img { cursor: pointer; }
+  gap: ${props => props.pc?"20px":"15px"};
+  & > img { 
+    cursor: pointer; 
+    width: ${props => props.pc?"30px":"20px"};
+  }
+  & > h1 { font-size: ${props => props.pc?"":"25px"}; }
 `
 
 const Comment = styled.div`
@@ -143,24 +205,24 @@ const Comment = styled.div`
   width: 70%;
   margin-top: 5px;
   margin-bottom: 5px;
+  & > h1 { align-self: flex-start; }
   & > div {
     display: flex;
     flex-direction: column;
     width: 90%;
     height: 110px;
     & > textarea {
-    border: 2px solid black;
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
+      border: 2px solid black;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
     }
     & > h1 {
-    font-size: 15px;
-    color: gray;
-    & > span { color: black; }
+      font-size: 15px;
+      color: gray;
+      & > span { color: black; }
     }
   }
-  & > h1 { align-self: flex-start; }
   & li {
     margin-bottom: 5px;
     & > div {
@@ -168,17 +230,18 @@ const Comment = styled.div`
       display: flex;
       align-items: center;
       & > h1 { 
-        font-size: 20px;
+        font-size: ${props => props.pc?"20px":"17px"};
         & > span { 
-          font-size: 15px;
+          font-size: ${props => props.pc?"15px":"13px"};
           font-weight: lighter;
         }
       } 
       & > button {
+        cursor: pointer;
         width: 30px;
         height: 30px;
         border-radius: 10px;
-        cursor: pointer;
+        font-size: ${props => props.pc?"":"9px"};
         &:hover {
           border: 1px solid black; 
         }
@@ -189,4 +252,6 @@ const Comment = styled.div`
 
 const Title = styled.h1` font-size: 40px; `
 
-const Data = styled.h1` font-size: 20px; `
+const Data = styled.h1` font-size: ${props => props.pc?"20px":"15px"}; `
+
+const Like = styled.img` filter: ${props => props.liked?"invert(90%)":undefined}; `

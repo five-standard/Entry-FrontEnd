@@ -30,7 +30,7 @@ export const Main = () => {
     let arr = [];
     for(let i = count*5; i<count*5+5; i++) {
       const tmp = response[i];
-      if(tmp) { arr.push( <TextBox Title={tmp.title} Date={tmp.date} Author={tmp.author} Likes={tmp.likes} Id={tmp.id} key={tmp.id} /> ) }
+      if(tmp) { arr.push( <TextBox Title={tmp.title} Date={tmp.date} Author={tmp.author} Likes={tmp.likes.length} Id={tmp.id} key={tmp.id} /> ) }
     }
     return arr;
   }

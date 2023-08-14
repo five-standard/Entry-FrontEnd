@@ -1,5 +1,5 @@
 import instance from "../axios";
 
-export const getPostDtail = async (id) => {
+export const getPostDetail = async (id) => {
   return await instance.get(`/posts/${id}`);
 }
