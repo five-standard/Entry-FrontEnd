@@ -1,5 +1,6 @@
 import { useMediaQuery } from 'react-responsive';
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { useCookies } from 'react-cookie';
 import { Button } from '../components/common/Button';
@@ -13,6 +14,7 @@ export const Login = () => {
   });
   const [,setCookie] = useCookies();
   const isPc = useMediaQuery({ query: "(min-width: 820px)" }); //true: PC, false: Mobile
+  const navigate = useNavigate();
   const _password = useRef();
 
   const handleChange = (e) => {
@@ -25,7 +27,7 @@ export const Login = () => {
       if(res) {
         setCookie('accessToken', res.data.accessToken, { path: '/' });
         setCookie('name', res.data.user.name, { path: '/' });
-        window.location.href = "/";
+        navigate("/");
       } else { _password.current.focus(); }
     });
   }
