@@ -15,7 +15,7 @@ export const Write = () => {
     date: `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`,
     data: "",
     comments: [],
-    likes: 0
+    likes: []
   });
   const isPc = useMediaQuery({ query: "(min-width: 820px)" }); //true: PC, false: Mobile
   const navigate = useNavigate();
