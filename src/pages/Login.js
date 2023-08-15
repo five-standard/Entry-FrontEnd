@@ -17,11 +17,17 @@ export const Login = () => {
   const navigate = useNavigate();
   const _password = useRef();
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { //입력값 변경 감지 이벤트
     const {value, name} = e.target;
     setAccount({...account, [name]: value});
   }
 
+  /**
+   * 로그인 버튼 클릭이벤트
+   * 만약 응답이 돌아온다면 메인 페이지로 이동한다.
+   * 오류가 발생한다면 _password 항목으로 커서를 이동시킨다.
+   * @event onClick
+   */
   const handleClick = () => {
     signIn(account).then(res => {
       if(res) {
@@ -32,6 +38,10 @@ export const Login = () => {
     });
   }
 
+  /**
+   * 엔터 입력시 커서 옮기는 KeyDown이벤트
+   * @event onKeyDown
+   */
   const handleKeyDown = (e) => {
     if(e.key==="Enter") {
       if(e.target.name==="email") _password.current.focus();

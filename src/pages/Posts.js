@@ -20,6 +20,10 @@ export const Posts = () => {
   const _init = useRef(false);
   const isPc = useMediaQuery({ query: "(min-width: 820px)" }); //true: PC, false: Mobile
 
+  /**
+   * useEffect를 통해 글의 세부 정보를 불러온다.
+   * 그 후 response는 응답 데이터로, comments는 댓글로, likes는 좋아요로 설정한다.
+   */
   useEffect(() => {
     getPostDetail(id).then(res => {
       setResponse(res.data);
@@ -28,7 +32,11 @@ export const Posts = () => {
     })
   }, []) 
 
-  useEffect(() => { //댓글목록 수정시 업로드
+  /**
+   * 아래의 두 useEffect는 각각 댓글, 좋아요 값이 바뀌었을때 바뀐 값을 patch해주는 코드이다.
+   * 첫 실행시에 useEffect가 실행되는것을 막기 위해 useRef를 사용하여 막아두었다.
+   */
+  useEffect(() => { 
     if(_init.current) { commentPost(comments, id); }
   }, [comments])
 
@@ -36,15 +44,23 @@ export const Posts = () => {
     if(_init.current) { likePost(likes, id); }
     else { _init.current = true; }
   }, [likes])
-
-  const handleCEdit = (e) => { //댓글 수정 후 이벤트
+ 
+  /**
+   * 댓글을 수정한 뒤 엔터를 눌렀을 때 실행되는 이벤트
+   * 만약 입력값이 비었다면 댓글을 삭제한다.
+   * 입력값이 비어있지 않다면 댓글을 수정한다.
+   * @event onKeyDown 
+   */
+  const handleCEdit = (e) => {
     if(e.key === "Enter") {
       let tmp = [...comments]; //임시 배열을 생성한다
-      if(comment==="") { tmp.splice(edit, 1); } //입력값이 비었다면 해당 댓글을 삭제한다
-      else { tmp[edit].data = comment; } //입력값이 안 비었다면 해당 댓글을 수정한다
-      setComments(tmp);
-      ResetComment(e);
-      setEdit(-1);
+      if(comment==="") { tmp.splice(edit, 1); }
+      else { 
+        tmp[edit].data = comment; 
+        setComments(tmp);
+        ResetComment(e);
+        setEdit(-1);
+      }
     }
   }
 
@@ -53,7 +69,13 @@ export const Posts = () => {
     setEdit(e.target.id);
   }
 
-  const handleCPost = (e) => { //댓글 업로드 이벤트
+  /**
+   * 댓글을 작성한 뒤 엔터를 눌렀을 때 실행되는 이벤트
+   * 만약 입력값이 비었다면 alert창을 띄운다
+   * 입력값이 비어있지 않다면 comments배열에 댓글을 추가한다. (이후 위쪽의 useEffect로 이어진다.)
+   * @event onKeyDown
+   */
+  const handleCPost = (e) => { 
     if(e.key === "Enter") {
       if(cookies.accessToken) {
         if(comment!=="") {
@@ -82,6 +104,16 @@ export const Posts = () => {
     setComment("");
   }
 
+  const handleEdit = () => { //글 수정페이지로 이동
+    navigate(`/editPost/${id}`);
+  }
+
+  /**
+   * 좋아요 버튼 클릭시 실행되는 이벤트
+   * 만약 좋아요 배열에 유저 이름이 이미 있다면 배열에서 유저 이름을 삭제한다.
+   * 없다면 배열에 유저 이름을 추가한다.
+   * @event onClick
+   */
   const handleLike = () => {
     if(cookies.accessToken) {
       if(likes.includes(cookies.name)) {
@@ -94,11 +126,7 @@ export const Posts = () => {
     } else { alert("해당 기능은 로그인이 필요합니다."); }
   }
 
-  const handleEdit = () => {
-    navigate(`/editPost/${id}`);
-  }
-
-  const handleDelete = () => {
+  const handleDelete = () => { //글 삭제 이벤트
     if(window.confirm("정말 삭제하시겠습니까?")) {
       deletePost(id).then(res => {
         if(res) {

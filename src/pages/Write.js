@@ -20,11 +20,16 @@ export const Write = () => {
   const isPc = useMediaQuery({ query: "(min-width: 820px)" }); //true: PC, false: Mobile
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { //입력값 변경 감지
     const {value, name} = e.target;
     setInput({...input, [name]: value});
   }
   
+  /**
+   * 글 등록 버튼 클릭이벤트
+   * 만약 응답이 돌아온다면 alert창 출력 후, 메인 페이지로 이동한다.
+   * @event onClick
+   */
   const handleClick = () => {
     regPost(input).then(res => {
       if(res) {

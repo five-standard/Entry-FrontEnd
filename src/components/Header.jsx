@@ -12,16 +12,16 @@ export const Header = () => {
   const isPc = useMediaQuery({ query: "(min-width: 820px)" }); //true: PC, false: Mobile
   const navigate = useNavigate();
 
-  const handleSearch = () => { 
+  const handleSearch = () => { //입력값이 있을 시 페이지 이동
     if(search!=="") { window.location.href = `/search/${search}`; }
     else { alert("검색어를 입력해주세요"); }
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { //검색어 변경 감지
     setSearch(e.target.value);
   }
 
-  const handleEnter = (e) => {
+  const handleEnter = (e) => { //엔터 입력 감지
     if(e.key==="Enter") { handleSearch(); }
   }
 

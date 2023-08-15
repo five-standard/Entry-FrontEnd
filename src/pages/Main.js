@@ -13,6 +13,11 @@ export const Main = () => {
   const [cookies,] = useCookies();
   const isPc = useMediaQuery({ query: "(min-width: 820px)" }); //true: PC, false: Mobile
 
+  /**
+   * useEffect를 통해 글을 전부 불러온다.
+   * 그 후 response는 응답 데이터로, leng은 배열의 길이를 5로 나눈 수로 설정한다
+   * 여기서 배열의 길이가 1~5라면 leng=1, 6~10이라면 leng=2, 11~12라면.... 과 같다.
+   */
   useEffect(() => {
     getPosts().then(res => { 
       setResponse(res.data); 
@@ -20,12 +25,20 @@ export const Main = () => {
     })
   }, [])
 
+  /**
+   * 아까 받아왔던 길이만큼 페이지네이션 버튼을 생성한다.
+   * @returns 페이지네이션 버튼 배열 ([<button>, <button>, ...])
+   */
   const PaginationSet = () => {
     let arr = [];
     for(let i = 0; i<leng; i++) { arr.push( <button name="page" id={i} key={i} onClick={handleClick}>{i+1}</button> ); }
     return arr;
   }
 
+  /**
+   * 글들을 count(현재 페이지 수)에 따라 출력한다. (count*5를 통해 5개씩 출력한다)
+   * @returns 글 버튼 배열 ([<div>, <div>, ...])
+   */
   const PostSet = () => {
     let arr = [];
     for(let i = count*5; i<count*5+5; i++) {
@@ -35,6 +48,10 @@ export const Main = () => {
     return arr;
   }
 
+  /**
+   * 페이지네이션 버튼 클릭 이벤트
+   * @event onClick
+   */
   const handleClick = (e) => {
     if(e.target.name === "page") {
       setCount(Number(e.target.id));

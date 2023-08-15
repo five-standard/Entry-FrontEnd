@@ -1,4 +1,3 @@
-// 완성
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
@@ -12,17 +11,26 @@ export const Search = () => {
   const isPc = useMediaQuery({ query: "(min-width: 820px)" });
   const { data } = useParams();
 
+  /**
+   * useEffect를 통해 검색 결과를 불러온다.
+   * 그 후 response는 응답 데이터로 설정한다.
+   */
   useEffect(() => {
     searchPosts(data).then(res => { 
       setResponse(res.data); 
     })
   }, [])
 
+  /**
+   * 검색바 엔터 감지 이벤트 (모바일용)
+   * 검색어 입력 후 엔터키를 누를 시 검색 결과를 표시하는 페이지로 이동한다.
+   * @event onKeyDown
+   */
   const handleKeyDown = (e) => {
     if(e.key==="Enter") { window.location.href = `/search/${search}`; }
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { //검색바 값 변경 감지 (모바일용)
     setSearch(e.target.value);
   }
 

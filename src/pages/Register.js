@@ -19,12 +19,18 @@ export const Register = () => {
   const _password = useRef();
   const _email = useRef();
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { //비밀번호 확인 항목 값 변경 감지
     const {value, name} = e.target;
     if(name === "passwordCheck") { setCheck(value); }
     else { setAccount({...account, [name]: value}); }
   }
 
+  /**
+   * 회원가입 버튼 클릭이벤트
+   * 만약 응답이 돌아온다면 alert창 출력 후, 로그인 페이지로 이동한다.
+   * 오류가 발생한다면 _passwordChk 항목으로 커서를 이동시킨다.
+   * @event onClick
+   */
   const handleClick = () => {
     if(account.password === check) {
       signUp(account).then(res => {
@@ -36,6 +42,10 @@ export const Register = () => {
     } else alert("Check your password");
   }
 
+  /**
+   * 엔터 입력시 커서 옮기는 KeyDown이벤트
+   * @event onKeyDown
+   */
   const handleKeydown = (e) => {
     if(e.key==="Enter") {
       if(e.target.name==="name") _email.current.focus();
