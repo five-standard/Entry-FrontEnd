@@ -55,12 +55,10 @@ export const Posts = () => {
     if(e.key === "Enter") {
       let tmp = [...comments]; //임시 배열을 생성한다
       if(comment==="") { tmp.splice(edit, 1); }
-      else { 
-        tmp[edit].data = comment; 
-        setComments(tmp);
-        ResetComment(e);
-        setEdit(-1);
-      }
+      else { tmp[edit].data = comment; }
+      setComments(tmp);
+      ResetComment(e);
+      setEdit(-1);
     }
   }
 
